@@ -25,6 +25,36 @@ Then open your browser to: **http://localhost:3000**
 
 ## ✨ Features
 
+### 🎭 Animated AI Coach (NEW!)
+- **Live anime-style character** that interacts with you in real-time
+- **Expressive emotions** (happy, thinking, excited, concerned, encouraging)
+- **Animated eyes** that blink and follow your actions
+- **Speaking animations** with mood-based colors
+- **Posture feedback** - reminds you to sit straight and maintain eye contact
+- **Typing guidance** - eyes look down when you type, gives real-time tips
+- **Content coaching** - encourages examples, metrics, and specificity
+- **Personality-driven** - feels like a real friend helping you succeed
+- **Sleeping/waking states** - comes alive when you start practicing
+
+### 🤖 Live AI Coach (NEW!)
+- **Real-time guidance** as you type your answers
+- **Contextual suggestions** based on question type
+- **STAR method coaching** for behavioral questions
+- **Answer length monitoring** with optimal timing
+- **Filler word detection** and alerts
+- **Enthusiasm and specificity checks**
+- **Progressive guidance** that adapts to your response
+- **Non-intrusive updates** every 0.8 seconds
+
+### 🎓 Interactive Training Guide
+- **10-step comprehensive training** covering all interview best practices
+- **Body language coaching** with camera tips
+- **Voice training** with speaking guidelines
+- **STAR method tutorial** for structured answers
+- **Practice tasks** for hands-on learning
+- **Quick Help modal** accessible during interviews
+- **Progress tracking** with completion status
+
 ### 🎥 Video Analysis
 - **Real-time webcam monitoring** with facial expression tracking
 - **Eye contact detection** to improve engagement
@@ -137,17 +167,29 @@ interview-coach/
 
 ## 🎮 How to Use
 
+### 0. **Complete Training (First-Time Users)**
+   - Click "Start Training Guide" on the home page
+   - Go through the 10-step interactive tutorial (10 minutes)
+   - Learn body language, speaking tips, STAR method, and more
+   - Understand how the AI analyzes your performance
+   - Complete to unlock best results!
+
 ### 1. **Start Interview**
    - Click "Start Practice Interview" on the home page
    - Allow camera and microphone access when prompted
 
 ### 2. **Answer Questions**
    - Read the interview question displayed
-   - Type your answer in the text area (or speak)
+   - **NEW**: Animated AI Coach wakes up and starts watching you!
+   - Watch the coach's eyes look down as you type
+   - Get real-time personality-driven feedback with emotions
+   - Receive posture and positioning reminders
+   - Type your answer with live coaching guidance
    - The system monitors your video and audio in real-time
 
 ### 3. **Receive Feedback**
    - Click "Next Question" to analyze your answer
+   - Click "Quick Help" button for instant tips during interview
    - AI provides confidence, clarity, and relevance scores
    - Continue through all 10 questions
 

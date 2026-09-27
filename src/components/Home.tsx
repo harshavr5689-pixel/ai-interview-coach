@@ -1,10 +1,32 @@
-import { Briefcase, Video, TrendingUp, Award } from 'lucide-react'
+import { useState } from 'react'
+import { Briefcase, Video, TrendingUp, Award, BookOpen } from 'lucide-react'
+import { TrainingGuide } from './TrainingGuide'
 
 interface HomeProps {
   onStartInterview: () => void
 }
 
 export function Home({ onStartInterview }: HomeProps) {
+  const [showTraining, setShowTraining] = useState(false)
+  const [hasCompletedTraining, setHasCompletedTraining] = useState(
+    localStorage.getItem('trainingCompleted') === 'true'
+  )
+
+  const handleStartTraining = () => {
+    setShowTraining(true)
+  }
+
+  const handleCompleteTraining = () => {
+    setShowTraining(false)
+    setHasCompletedTraining(true)
+    localStorage.setItem('trainingCompleted', 'true')
+    onStartInterview()
+  }
+
+  const handleCloseTraining = () => {
+    setShowTraining(false)
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
       <div className="max-w-4xl w-full">
@@ -47,14 +69,34 @@ export function Home({ onStartInterview }: HomeProps) {
           </div>
         </div>
 
-        <div className="text-center">
-          <button
-            onClick={onStartInterview}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-4 rounded-xl text-xl font-semibold shadow-lg transition-colors"
-          >
-            Start Practice Interview
-          </button>
-          <p className="text-gray-500 mt-4 text-sm">
+        <div className="text-center space-y-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button
+              onClick={onStartInterview}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-4 rounded-xl text-xl font-semibold shadow-lg transition-colors w-full sm:w-auto"
+            >
+              Start Practice Interview
+            </button>
+            
+            <button
+              onClick={handleStartTraining}
+              className="bg-white hover:bg-gray-50 text-indigo-600 border-2 border-indigo-600 px-8 py-4 rounded-xl text-lg font-semibold shadow-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center"
+            >
+              <BookOpen className="w-5 h-5" />
+              {hasCompletedTraining ? 'Review Training' : 'Start Training Guide'}
+            </button>
+          </div>
+          
+          {!hasCompletedTraining && (
+            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4 max-w-2xl mx-auto">
+              <p className="text-yellow-800 font-semibold flex items-center gap-2 justify-center">
+                <BookOpen className="w-5 h-5" />
+                New here? Complete the 10-minute training guide first!
+              </p>
+            </div>
+          )}
+          
+          <p className="text-gray-500 text-sm">
             Make sure to allow camera and microphone access
           </p>
         </div>
@@ -69,6 +111,14 @@ export function Home({ onStartInterview }: HomeProps) {
           </ol>
         </div>
       </div>
+
+      {/* Training Guide Modal */}
+      {showTraining && (
+        <TrainingGuide 
+          onClose={handleCloseTraining}
+          onComplete={handleCompleteTraining}
+        />
+      )}
     </div>
   )
 }

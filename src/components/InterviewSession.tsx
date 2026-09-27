@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Mic, MicOff, Video as VideoIcon, VideoOff, ArrowRight, Home } from 'lucide-react'
+import { Mic, MicOff, Video as VideoIcon, VideoOff, ArrowRight, Home, HelpCircle } from 'lucide-react'
 import Webcam from 'react-webcam'
 import { useInterviewStore } from '../store/interviewStore'
 import { analyzeAnswer } from '../utils/aiService'
@@ -7,6 +7,8 @@ import { FaceDetectionService } from '../utils/faceDetection'
 import { SpeechAnalysisService } from '../utils/speechAnalysis'
 import { TipsPanel } from './TipsPanel'
 import { AudioVisualizer } from './AudioVisualizer'
+import { QuickHelpModal } from './QuickHelpModal'
+import { AnimatedAICoach } from './AnimatedAICoach'
 
 interface InterviewSessionProps {
   onEndInterview: () => void
@@ -31,6 +33,8 @@ export function InterviewSession({ onEndInterview }: InterviewSessionProps) {
   const [isAudioEnabled, setIsAudioEnabled] = useState(true)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [tips, setTips] = useState<string[]>([])
+  const [showHelp, setShowHelp] = useState(false)
+  const [videoStream, setVideoStream] = useState<MediaStream | null>(null)
   
   const webcamRef = useRef<Webcam>(null)
   const faceDetectionRef = useRef<FaceDetectionService>()
@@ -139,10 +143,17 @@ export function InterviewSession({ onEndInterview }: InterviewSessionProps) {
             </div>
             <button
               onClick={handleEndInterview}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
               <Home className="w-5 h-5" />
               End Interview
+            </button>
+            <button
+              onClick={() => setShowHelp(true)}
+              className="flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-4 py-2 rounded-lg font-semibold transition-colors"
+            >
+              <HelpCircle className="w-5 h-5" />
+              Quick Help
             </button>
           </div>
         </div>
@@ -159,6 +170,7 @@ export function InterviewSession({ onEndInterview }: InterviewSessionProps) {
                     audio={false}
                     className="w-full h-full object-cover"
                     mirrored
+                    onUserMedia={(stream) => setVideoStream(stream)}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -236,12 +248,24 @@ export function InterviewSession({ onEndInterview }: InterviewSessionProps) {
             </div>
           </div>
 
-          {/* Tips Panel */}
-          <div className="lg:col-span-1">
+          {/* Right Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Animated AI Coach */}
+            <AnimatedAICoach
+              isActive={true}
+              videoStream={videoStream}
+              currentAnswer={currentAnswer}
+              isTyping={currentAnswer.length > 0}
+            />
+            
+            {/* Tips Panel */}
             <TipsPanel tips={tips} />
           </div>
         </div>
       </div>
+
+      {/* Quick Help Modal */}
+      {showHelp && <QuickHelpModal onClose={() => setShowHelp(false)} />}
     </div>
   )
 }
